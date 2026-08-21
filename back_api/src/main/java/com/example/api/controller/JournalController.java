@@ -38,6 +38,22 @@ public class JournalController {
         return ResponseEntity.ok(map);
     }
 
+    @GetMapping(value = "/my-list/{mid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> myList(@PathVariable Long mid, PageRequestDTO pageRequestDTO) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageResultDTO", journalService.getMyList(pageRequestDTO, mid));
+        map.put("pageRequestDTO", pageRequestDTO);
+        return ResponseEntity.ok(map);
+    }
+
+    @GetMapping(value = "/community/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> publicList(PageRequestDTO pageRequestDTO) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageResultDTO", journalService.getPublicList(pageRequestDTO));
+        map.put("pageRequestDTO", pageRequestDTO);
+        return ResponseEntity.ok(map);
+    }
+
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Long> registerJournal(@RequestBody JournalDTO journalDTO) {
         return ResponseEntity.ok((Long) journalService.register(journalDTO));

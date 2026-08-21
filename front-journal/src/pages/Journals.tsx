@@ -9,8 +9,8 @@ type DivProps = React.ComponentProps<'div'>
 
 export default function Journals({className, ...props}: DivProps) {
   // const token = useToken() // sessionStorage의 값을 가져올 때
-  const token = authStore(state => state.user?.token) // zustand의 store에서 가져올 때
-  console.log(authStore(state => state.user))
+  const user = authStore(state => state.user)
+  const token = user?.token
   const navigate = useNavigate()
   const [query] = useSearchParams()
   const PAGE_SIZE = 12
@@ -58,7 +58,9 @@ export default function Journals({className, ...props}: DivProps) {
       queryParams.push(`keyword=${encodeURIComponent(keyword)}`)
     }
 
-    let url = 'http://localhost:8080/api/journal/list'
+    if (!user?.mid || !token) return
+
+    let url = `http://localhost:8080/api/journal/my-list/${user.mid}`
     if (queryParams.length > 0) {
       url += '?' + queryParams.join('&')
     }
@@ -76,7 +78,7 @@ export default function Journals({className, ...props}: DivProps) {
         setJournalsDTO(dtoList)
       })
       .catch(err => console.error('Data Fetching Error:', err))
-  }, [query])
+  }, [query, token, user?.mid])
 
   const handleSearchSubmit = useCallback(
     (e: SubmitEvent) => {
@@ -131,7 +133,7 @@ export default function Journals({className, ...props}: DivProps) {
         <div className="container px-5 mb-5">
           <div className="text-center mb-5">
             <h1 className="display-5 fw-bolder mb-0">
-              <span className="text-gradient d-inline">Journals</span>
+              <span className="text-gradient d-inline">My Journal</span>
             </h1>
           </div>
           <div className="d-flex align-items-center justify-content-between mb-4">

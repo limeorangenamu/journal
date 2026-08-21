@@ -26,7 +26,10 @@ export default function JournalCard({journal}: JournalCardProps) {
       </div>
 
       <div className="card-body d-flex align-items-center justify-content-center text-center p-3">
-        <h2 className="h5 fw-bold journal-card-title">{journal.title}</h2>
+        <div>
+          <h2 className="h5 fw-bold journal-card-title mb-1">{journal.title}</h2>
+          <p className="small text-muted mb-0">{journal.membersDTO.nickname || journal.membersDTO.name}</p>
+        </div>
       </div>
     </>
   )

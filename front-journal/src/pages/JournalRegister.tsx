@@ -15,6 +15,7 @@ export default function JournalRegister() {
   const refContent = useRef<HTMLTextAreaElement | null>(null)
 
   const [photos, setPhotos] = useState<PhotosDTO[]>([])
+  const [isPublic, setIsPublic] = useState(true)
 
   const checkExtension = useCallback((fileName: string, fileSize: number) => {
     const maxSize = 1024 * 1024 * 10
@@ -110,6 +111,7 @@ export default function JournalRegister() {
       const requestData = {
         title,
         content,
+        isPublic,
         membersDTO: {
           mid: user.mid
         },
@@ -162,7 +164,7 @@ export default function JournalRegister() {
         )
       }
     },
-    [token, user?.mid, photos, query, navigate]
+    [token, user?.mid, photos, query, navigate, isPublic]
   )
   return (
     <>
@@ -197,6 +199,23 @@ export default function JournalRegister() {
                   style={{height: '15rem'}}
                 />
                 <label htmlFor="content">Content</label>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label fw-semibold">공개 설정</label>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    id="isPublic"
+                    type="checkbox"
+                    checked={isPublic}
+                    onChange={e => setIsPublic(e.target.checked)}
+                  />
+                  <label className="form-check-label" htmlFor="isPublic">
+                    Community에 공개하기
+                  </label>
+                </div>
+                <div className="form-text">해제한 기록은 나만 볼 수 있습니다.</div>
               </div>
 
               <div className="form-floating mb-3">

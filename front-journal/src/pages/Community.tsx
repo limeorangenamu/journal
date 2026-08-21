@@ -1,79 +1,70 @@
-type DivProps = React.ComponentProps<'div'>
+import {useEffect, useState} from 'react'
+import {Link} from 'react-router'
+import JournalCard from '../components/JournalCard'
+import {authStore} from '../store'
+import type {JournalDTO} from '../types'
 
-export default function Community({className, ...props}: DivProps) {
+export default function Community() {
+  const token = authStore(state => state.user?.token)
+  const [journals, setJournals] = useState<JournalDTO[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (!token) return
+
+    fetch('http://localhost:8080/api/journal/community/list?page=1&size=12', {
+      headers: {Authorization: `Bearer ${token}`}
+    })
+      .then(async response => {
+        if (!response.ok) {
+          throw new Error(`공개 기록을 불러오지 못했습니다. (${response.status})`)
+        }
+        return response.json()
+      })
+      .then(data => setJournals(data.pageResultDTO?.dtoList ?? []))
+      .catch(caught => {
+        setError(caught instanceof Error ? caught.message : '오류가 발생했습니다.')
+      })
+      .finally(() => setLoading(false))
+  }, [token])
+
   return (
-    <div className="container px-5 my-5">
-      <div className="text-center mb-5">
-        <h1 className="display-5 fw-bolder mb-0">
-          <span className="text-gradient d-inline">Community</span>
-        </h1>
-      </div>
-      <div className="row gx-5 justify-content-center bg-light pt-3 rounded-4">
-        <div className="col-lg-11 col-xl-9 col-xxl-8">
-          <section>
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <h2 className="text-primary fw-bolder mb-0">Following</h2>
-              <a className="btn btn-primary px-4 py-3" href="#!">
-                <div className="d-inline-block bi bi-search me-2"></div>
-                Find
-              </a>
-            </div>
-            <div className="card shadow border-0 rounded-4 mb-5">
-              <div className="card-body p-2">
-                <div className="row align-items-center gx-5">
-                  <div className="col text-center text-lg-start mb-4 mb-lg-0">
-                    <div className="bg-light p-4 rounded-4">
-                      <div className="text-primary fw-bolder mb-2">2019 - Present</div>
-                      <div className="small fw-bolder">Web Developer</div>
-                      <div className="small text-muted">Stark Industries</div>
-                      <div className="small text-muted">Los Angeles, CA</div>
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
-                    <div>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-                      laudantium, voluptatem quis repellendus eaque sit animi illo ipsam
-                      amet officiis corporis sed aliquam non voluptate corrupti excepturi
-                      maxime porro fuga.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section>
-            <h2 className="text-secondary fw-bolder mb-4">Follower</h2>
-            <div className="card shadow border-0 rounded-4 mb-5">
-              <div className="card-body p-2">
-                <div className="row align-items-center gx-5">
-                  <div className="col text-center text-lg-start mb-4 mb-lg-0">
-                    <div className="bg-light p-4 rounded-4">
-                      <div className="text-secondary fw-bolder mb-2">2015 - 2017</div>
-                      <div className="mb-2">
-                        <div className="small fw-bolder">Barnett College</div>
-                        <div className="small text-muted">Fairfield, NY</div>
-                      </div>
-                      <div className="fst-italic">
-                        <div className="small text-muted">Master's</div>
-                        <div className="small text-muted">Web Development</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
-                    <div>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-                      laudantium, voluptatem quis repellendus eaque sit animi illo ipsam
-                      amet officiis corporis sed aliquam non voluptate corrupti excepturi
-                      maxime porro fuga.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <div className="pb-5"></div>
+    <section className="py-5">
+      <div className="container px-5">
+        <div className="text-center mb-5">
+          <p className="text-uppercase text-primary fw-semibold mb-2">Public stories</p>
+          <h1 className="display-5 fw-bolder mb-3">
+            <span className="text-gradient">Community</span>
+          </h1>
+          <p className="lead text-muted mb-0">다른 사람들이 공개한 기록을 발견해 보세요.</p>
         </div>
+
+        {loading ? (
+          <div className="text-center py-5">
+            <div className="spinner-border" />
+            <p className="mt-3 text-muted">기록을 불러오는 중입니다.</p>
+          </div>
+        ) : error ? (
+          <div className="alert alert-danger">{error}</div>
+        ) : journals.length === 0 ? (
+          <div className="text-center bg-light rounded-4 py-5 text-muted">
+            아직 공개된 기록이 없습니다.
+          </div>
+        ) : (
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+            {journals.map(journal => (
+              <div className="col" key={journal.jno}>
+                <Link
+                  to={`/journals/${journal.jno}`}
+                  className="card h-100 overflow-hidden shadow-sm rounded-4 border-0 text-decoration-none text-reset">
+                  <JournalCard journal={journal} />
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   )
 }

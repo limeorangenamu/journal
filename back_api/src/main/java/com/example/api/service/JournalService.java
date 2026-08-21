@@ -13,6 +13,10 @@ public interface JournalService {
 
     PageResultDTO<JournalDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
+    PageResultDTO<JournalDTO, Object[]> getMyList(PageRequestDTO pageRequestDTO, Long mid);
+
+    PageResultDTO<JournalDTO, Object[]> getPublicList(PageRequestDTO pageRequestDTO);
+
     JournalDTO get(Long jno);
 
     void modify(JournalDTO journalDTO);
@@ -28,6 +32,7 @@ public interface JournalService {
                 .jno(journalDTO.getJno())
                 .title(journalDTO.getTitle())
                 .content(journalDTO.getContent())
+                .isPublic(journalDTO.isPublic())
                 .members(Members.builder().mid(journalDTO.getMembersDTO().getMid()).build())
                 .build();
         map.put("journal", journal);
@@ -60,6 +65,7 @@ public interface JournalService {
                 .jno(journal.getJno())
                 .title(journal.getTitle())
                 .content(journal.getContent())
+                .isPublic(journal.isPublic())
                 .membersDTO(membersDTO)
                 .regDate(journal.getRegDate())
                 .modDate(journal.getModDate())

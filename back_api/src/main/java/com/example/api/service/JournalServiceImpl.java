@@ -50,7 +50,27 @@ public class JournalServiceImpl implements JournalService {
     public PageResultDTO<JournalDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable(Sort.by("jno").descending());
         Page<Object[]> result = journalRepository.searchPage(
-                pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pageable);
+                pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pageable, null, null);
+        return toPageResult(result, pageRequestDTO);
+    }
+
+    @Override
+    public PageResultDTO<JournalDTO, Object[]> getMyList(PageRequestDTO pageRequestDTO, Long mid) {
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("jno").descending());
+        Page<Object[]> result = journalRepository.searchPage(
+                pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pageable, mid, null);
+        return toPageResult(result, pageRequestDTO);
+    }
+
+    @Override
+    public PageResultDTO<JournalDTO, Object[]> getPublicList(PageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("jno").descending());
+        Page<Object[]> result = journalRepository.searchPage(
+                pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pageable, null, true);
+        return toPageResult(result, pageRequestDTO);
+    }
+
+    private PageResultDTO<JournalDTO, Object[]> toPageResult(Page<Object[]> result, PageRequestDTO pageRequestDTO) {
         Function<Object[], JournalDTO> function = arr -> entityToDto(
                 (Journal) arr[0],
                 (List<Photos>) (Arrays.asList((Photos) arr[1])),
@@ -85,6 +105,7 @@ public class JournalServiceImpl implements JournalService {
             Journal journal = (Journal) entityMap.get("journal");
             journal.changeTitle(journalDTO.getTitle());
             journal.changeContent(journalDTO.getContent());
+            journal.changePublic(journalDTO.isPublic());
             journalRepository.save(journal);
 
             List<Photos> newPhotosList = (List<Photos>) entityMap.get("photosList");//from client(new)

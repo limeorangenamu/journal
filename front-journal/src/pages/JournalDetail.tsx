@@ -50,6 +50,7 @@ export default function JournalDetail() {
 
   const [editTitle, setEditTitle] = useState('')
   const [editContent, setEditContent] = useState('')
+  const [editIsPublic, setEditIsPublic] = useState(false)
 
   const refEditFile = useRef<HTMLInputElement | null>(null)
 
@@ -85,6 +86,7 @@ export default function JournalDetail() {
         setJournal(data.journalDTO)
         setEditTitle(data.journalDTO.title)
         setEditContent(data.journalDTO.content)
+        setEditIsPublic(data.journalDTO.isPublic)
 
         setEditPhotos(
           (data.journalDTO.photosDTOList ?? []).map(photo => ({
@@ -121,6 +123,7 @@ export default function JournalDetail() {
 
     setEditTitle(journal.title)
     setEditContent(journal.content)
+    setEditIsPublic(journal.isPublic)
 
     setEditPhotos(
       journal.photosDTOList.map(photo => ({
@@ -279,6 +282,7 @@ export default function JournalDetail() {
 
     setEditTitle(journal.title)
     setEditContent(journal.content)
+    setEditIsPublic(journal.isPublic)
 
     setEditPhotos(
       journal.photosDTOList.map(photo => ({
@@ -314,6 +318,7 @@ export default function JournalDetail() {
       jno: journal.jno,
       title,
       content,
+      isPublic: editIsPublic,
 
       // 사진을 수정하지 않을 때도 기존 사진 목록을 보냅니다.
       // 보내지 않으면 서버가 모든 사진을 삭제할 수 있습니다.
@@ -352,6 +357,7 @@ export default function JournalDetail() {
         ...journal,
         title,
         content,
+        isPublic: editIsPublic,
         photosDTOList: savedPhotos
       })
 
@@ -477,6 +483,18 @@ export default function JournalDetail() {
                 onChange={e => setEditContent(e.target.value)}
               />
             </div>
+            <div className="form-check mb-3">
+              <input
+                className="form-check-input"
+                id="editIsPublic"
+                type="checkbox"
+                checked={editIsPublic}
+                onChange={e => setEditIsPublic(e.target.checked)}
+              />
+              <label className="form-check-label" htmlFor="editIsPublic">
+                Community에 공개하기
+              </label>
+            </div>
             <div className="mb-4">
               <label className="form-label fw-bold" htmlFor="editPhotoInput">
                 사진 추가
@@ -563,6 +581,9 @@ export default function JournalDetail() {
             <p className="text-secondary border-bottom pb-3">
               작성자: {journal.membersDTO.name}
             </p>
+            <span className={`badge ${journal.isPublic ? 'text-bg-primary' : 'text-bg-secondary'} mb-3`}>
+              {journal.isPublic ? '공개 기록' : '비공개 기록'}
+            </span>
 
             {journal.photosDTOList.length > 0 && (
               <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4 justify-content-center">

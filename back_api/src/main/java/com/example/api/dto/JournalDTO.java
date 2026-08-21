@@ -17,6 +17,7 @@ public class JournalDTO {
   private Long jno;
   private String title;
   private String content;
+  private boolean isPublic;
 
   @Builder.Default // Journal과 Photos가 LAZY로 설정, AllArgsConstructor하면 기본 값으로 초기화
   private List<PhotosDTO> photosDTOList = new ArrayList<>();

@@ -26,7 +26,7 @@ public class SearchJournalRepositoryImpl implements SearchJournalRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<Object[]> searchPage(String type, String keyword, Pageable pageable) {
+    public Page<Object[]> searchPage(String type, String keyword, Pageable pageable, Long mid, Boolean isPublic) {
         // 1) 도메인 선언
         QJournal qJournal = QJournal.journal;
         QPhotos qPhotos = QPhotos.photos;
@@ -37,6 +37,8 @@ public class SearchJournalRepositoryImpl implements SearchJournalRepository {
         // 2) 검색 조건 객체 생성 및 기본 조건 지정
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(qJournal.jno.gt(0L)); // 기본 검색 조건
+        if (mid != null) builder.and(qJournal.members.mid.eq(mid));
+        if (isPublic != null) builder.and(qJournal.isPublic.eq(isPublic));
 
         // 3) 검색 조건 추가
         if (type != null && !type.trim().isEmpty()) {
