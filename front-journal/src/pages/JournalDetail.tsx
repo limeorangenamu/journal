@@ -109,6 +109,10 @@ export default function JournalDetail() {
   }, [jno, token, navigate])
 
   const makeListUrl = () => {
+    if (query.get('from') === 'community') {
+      return '/community'
+    }
+
     const params = new URLSearchParams({
       page: query.get('page') ?? '1',
       type: query.get('type') ?? '',
@@ -420,7 +424,7 @@ export default function JournalDetail() {
         keyword: data.keyword ?? ''
       })
 
-      navigate(`/journals?${params.toString()}`)
+      navigate(query.get('from') === 'community' ? '/community' : `/journals?${params.toString()}`)
     } catch (caught) {
       console.error('삭제 오류:', caught)
 

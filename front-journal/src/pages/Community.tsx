@@ -75,7 +75,7 @@ export default function Community() {
             {journals.map(journal => (
               <div className="col" key={journal.jno}>
                 <Link
-                  to={`/journals/${journal.jno}`}
+                  to={`/journals/${journal.jno}?from=community`}
                   className="card h-100 overflow-hidden shadow-sm rounded-4 border-0 text-decoration-none text-reset">
                   <JournalCard journal={journal} showViews />
                 </Link>
