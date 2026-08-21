@@ -75,3 +75,171 @@
   line-height: 1.4;
   min-height: 2.8em;
 }
+
+/* journal 공통 인터랙션과 화면 톤 */
+:root {
+  --journal-primary: #3f2ce6;
+  --journal-secondary: #b91c88;
+  --journal-ink: #25223a;
+  --journal-muted: #746f86;
+  --journal-line: #e8e5f1;
+  --journal-surface: #ffffff;
+  --journal-soft: #f8f7fc;
+  --journal-shadow: 0 14px 30px rgba(44, 33, 102, 0.1);
+  --journal-transition: 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+body {
+  color: var(--journal-ink);
+  background: var(--journal-soft);
+}
+
+.navbar,
+footer {
+  border-color: var(--journal-line) !important;
+}
+
+.navbar {
+  border-bottom: 1px solid var(--journal-line);
+}
+
+.navbar-brand {
+  letter-spacing: -0.04em;
+  transition: color var(--journal-transition), transform var(--journal-transition);
+}
+
+.navbar-brand:hover {
+  color: var(--journal-secondary) !important;
+  transform: translateY(-1px);
+}
+
+.nav-link {
+  position: relative;
+  transition: color var(--journal-transition), transform var(--journal-transition);
+}
+
+.nav-link::after {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.25rem;
+  left: 0.5rem;
+  height: 2px;
+  content: '';
+  background: linear-gradient(90deg, var(--journal-primary), var(--journal-secondary));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--journal-transition);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--journal-primary) !important;
+  transform: translateY(-1px);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.btn,
+.page-link,
+.btn-close {
+  transition: transform var(--journal-transition), box-shadow var(--journal-transition),
+    background-color var(--journal-transition), border-color var(--journal-transition),
+    color var(--journal-transition);
+}
+
+.btn {
+  border-radius: 0.75rem;
+}
+
+.btn:hover:not(:disabled),
+.page-link:hover:not(:disabled) {
+  box-shadow: 0 8px 18px rgba(56, 42, 150, 0.18);
+  transform: translateY(-2px);
+}
+
+.btn:active:not(:disabled),
+.page-link:active:not(:disabled),
+.btn-close:active {
+  box-shadow: none;
+  transform: translateY(0) scale(0.97);
+}
+
+.btn:focus-visible,
+.page-link:focus-visible,
+.nav-link:focus-visible,
+.navbar-brand:focus-visible,
+.card:focus-visible {
+  outline: 3px solid rgba(63, 44, 230, 0.28);
+  outline-offset: 3px;
+}
+
+.form-control,
+.form-select,
+.form-check-input {
+  border-color: var(--journal-line);
+  transition: border-color var(--journal-transition), box-shadow var(--journal-transition),
+    background-color var(--journal-transition);
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--journal-primary);
+  box-shadow: 0 0 0 0.25rem rgba(63, 44, 230, 0.13);
+}
+
+.form-check-input:checked {
+  background-color: var(--journal-primary);
+  border-color: var(--journal-primary);
+}
+
+.card {
+  border-radius: 1rem !important;
+  border-color: var(--journal-line);
+}
+
+a.card {
+  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 240ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color var(--journal-transition);
+}
+
+a.card:hover {
+  border-color: rgba(63, 44, 230, 0.26);
+  box-shadow: var(--journal-shadow) !important;
+  transform: translateY(-6px);
+}
+
+a.card .journal-card-cover-image {
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+a.card:hover .journal-card-cover-image {
+  transform: scale(1.04);
+}
+
+.journal-card-cover {
+  background: #f0eef7;
+}
+
+.journal-detail-photo-frame,
+.register-photo-frame {
+  border-color: var(--journal-line);
+  background: var(--journal-surface);
+}
+
+.pagination .page-link {
+  border-radius: 0.65rem;
+  margin: 0 0.15rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

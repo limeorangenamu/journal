@@ -33,11 +33,9 @@ export default function Community() {
     <section className="py-5">
       <div className="container px-5">
         <div className="text-center mb-5">
-          <p className="text-uppercase text-primary fw-semibold mb-2">Public stories</p>
-          <h1 className="display-5 fw-bolder mb-3">
+          <h1 className="display-5 fw-bolder mb-0">
             <span className="text-gradient">Community</span>
           </h1>
-          <p className="lead text-muted mb-0">다른 사람들이 공개한 기록을 발견해 보세요.</p>
         </div>
 
         {loading ? (
