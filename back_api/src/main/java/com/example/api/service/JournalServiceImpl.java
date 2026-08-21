@@ -84,6 +84,8 @@ public class JournalServiceImpl implements JournalService {
     public JournalDTO get(Long jno) {
         List<Object[]> result = journalRepository.getJournalDetail(jno);
         Journal journal = (Journal) result.get(0)[0];
+        journal.increaseViews();
+        journalRepository.save(journal);
         List<Photos> photosList = new ArrayList<>();
         result.forEach(row -> {
             Photos photo = (Photos) row[1];
@@ -105,7 +107,7 @@ public class JournalServiceImpl implements JournalService {
             Journal journal = (Journal) entityMap.get("journal");
             journal.changeTitle(journalDTO.getTitle());
             journal.changeContent(journalDTO.getContent());
-            journal.changePublic(journalDTO.isPublic());
+            journal.changePublic(Boolean.TRUE.equals(journalDTO.getPublicStatus()));
             journalRepository.save(journal);
 
             List<Photos> newPhotosList = (List<Photos>) entityMap.get("photosList");//from client(new)

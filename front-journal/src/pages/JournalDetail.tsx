@@ -582,7 +582,7 @@ export default function JournalDetail() {
               작성자: {journal.membersDTO.name}
             </p>
             <span className={`badge ${journal.isPublic ? 'text-bg-primary' : 'text-bg-secondary'} mb-3`}>
-              {journal.isPublic ? '공개 기록' : '비공개 기록'}
+              {journal.isPublic ? '공개' : '비공개'}
             </span>
 
             {journal.photosDTOList.length > 0 && (

@@ -56,7 +56,7 @@ export default function Community() {
                 <Link
                   to={`/journals/${journal.jno}`}
                   className="card h-100 overflow-hidden shadow-sm rounded-4 border-0 text-decoration-none text-reset">
-                  <JournalCard journal={journal} />
+                  <JournalCard journal={journal} showViews />
                 </Link>
               </div>
             ))}

@@ -41,13 +41,13 @@ export default function Header({className, ...props}: DivProps) {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/community">
-                  Community
+                <NavLink className="nav-link" to="/journals">
+                  Journals
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/journals">
-                  Journals
+                <NavLink className="nav-link" to="/community">
+                  Community
                 </NavLink>
               </li>
               {!user ? (

@@ -2,9 +2,10 @@ import type {JournalDTO} from '../types'
 
 interface JournalCardProps {
   journal: JournalDTO
+  showViews?: boolean
 }
 
-export default function JournalCard({journal}: JournalCardProps) {
+export default function JournalCard({journal, showViews = false}: JournalCardProps) {
   const firstPhoto = journal.photosDTOList?.[0]
 
   const coverUrl = firstPhoto?.getPhotosURL
@@ -29,6 +30,12 @@ export default function JournalCard({journal}: JournalCardProps) {
         <div>
           <h2 className="h5 fw-bold journal-card-title mb-1">{journal.title}</h2>
           <p className="small text-muted mb-0">{journal.membersDTO.nickname || journal.membersDTO.name}</p>
+          <div className="d-flex align-items-center justify-content-center gap-2 mt-2">
+            <span className={`badge ${journal.isPublic ? 'text-bg-primary' : 'text-bg-secondary'}`}>
+              {journal.isPublic ? '공개' : '비공개'}
+            </span>
+            {showViews && <span className="small text-muted">조회 {journal.views ?? 0}</span>}
+          </div>
         </div>
       </div>
     </>

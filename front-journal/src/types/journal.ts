@@ -6,6 +6,7 @@ export interface JournalDTO {
   title: string
   content: string
   isPublic: boolean
+  views: number
   photosDTOList: PhotosDTO[]
   membersDTO: MembersDTO
   likes: number
