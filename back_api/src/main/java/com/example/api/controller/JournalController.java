@@ -47,9 +47,11 @@ public class JournalController {
     }
 
     @GetMapping(value = "/community/list", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> publicList(PageRequestDTO pageRequestDTO) {
+    public ResponseEntity<Map<String, Object>> publicList(
+            PageRequestDTO pageRequestDTO,
+            @RequestParam(defaultValue = "latest") String sort) {
         Map<String, Object> map = new HashMap<>();
-        map.put("pageResultDTO", journalService.getPublicList(pageRequestDTO));
+        map.put("pageResultDTO", journalService.getPublicList(pageRequestDTO, "popular".equals(sort)));
         map.put("pageRequestDTO", pageRequestDTO);
         return ResponseEntity.ok(map);
     }

@@ -7,13 +7,17 @@ import type {JournalDTO} from '../types'
 export default function Community() {
   const token = authStore(state => state.user?.token)
   const [journals, setJournals] = useState<JournalDTO[]>([])
+  const [sort, setSort] = useState<'latest' | 'popular'>('latest')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (!token) return
 
-    fetch('http://localhost:8080/api/journal/community/list?page=1&size=12', {
+    setLoading(true)
+    setError('')
+
+    fetch(`http://localhost:8080/api/journal/community/list?page=1&size=12&sort=${sort}`, {
       headers: {Authorization: `Bearer ${token}`}
     })
       .then(async response => {
@@ -27,7 +31,7 @@ export default function Community() {
         setError(caught instanceof Error ? caught.message : '오류가 발생했습니다.')
       })
       .finally(() => setLoading(false))
-  }, [token])
+  }, [token, sort])
 
   return (
     <section className="py-5">
@@ -36,6 +40,23 @@ export default function Community() {
           <h1 className="display-5 fw-bolder mb-0">
             <span className="text-gradient">Community</span>
           </h1>
+        </div>
+
+        <div className="d-flex justify-content-end mb-4">
+          <div className="btn-group" role="group" aria-label="Community 정렬">
+            <button
+              type="button"
+              className={`btn btn-sm ${sort === 'latest' ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => setSort('latest')}>
+              최신순
+            </button>
+            <button
+              type="button"
+              className={`btn btn-sm ${sort === 'popular' ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => setSort('popular')}>
+              인기순
+            </button>
+          </div>
         </div>
 
         {loading ? (

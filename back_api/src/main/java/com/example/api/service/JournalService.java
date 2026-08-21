@@ -15,7 +15,7 @@ public interface JournalService {
 
     PageResultDTO<JournalDTO, Object[]> getMyList(PageRequestDTO pageRequestDTO, Long mid);
 
-    PageResultDTO<JournalDTO, Object[]> getPublicList(PageRequestDTO pageRequestDTO);
+    PageResultDTO<JournalDTO, Object[]> getPublicList(PageRequestDTO pageRequestDTO, boolean popular);
 
     JournalDTO get(Long jno);
 

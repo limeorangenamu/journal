@@ -63,8 +63,11 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public PageResultDTO<JournalDTO, Object[]> getPublicList(PageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable(Sort.by("jno").descending());
+    public PageResultDTO<JournalDTO, Object[]> getPublicList(PageRequestDTO pageRequestDTO, boolean popular) {
+        Sort sort = popular
+                ? Sort.by(Sort.Order.desc("views"), Sort.Order.desc("jno"))
+                : Sort.by("jno").descending();
+        Pageable pageable = pageRequestDTO.getPageable(sort);
         Page<Object[]> result = journalRepository.searchPage(
                 pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pageable, null, true);
         return toPageResult(result, pageRequestDTO);
