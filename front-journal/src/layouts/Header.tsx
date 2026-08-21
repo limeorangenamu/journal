@@ -20,7 +20,7 @@ export default function Header({className, ...props}: DivProps) {
         <div className="container px-5">
           {/* 로고는 활성화 표시가 필요 없으므로 일반 Link 사용 */}
           <Link className="navbar-brand" to="/">
-            <span className="fw-bolder text-primary">PALWORLD</span>
+            <span className="fw-bolder text-primary">journal</span>
           </Link>
           <button
             className="navbar-toggler"

@@ -137,7 +137,7 @@ export default function Join({className, ...props}: DivProps) {
             </div>
             <h1 className="fw-bolder">회원가입</h1>
             <p className="lead fw-normal text-muted mb-0">
-              가입하여 도감을 완성시켜주세요
+              가입하고 나만의 기록을 시작해 보세요
             </p>
           </div>
           <div className="row gx-5 justify-content-center">
