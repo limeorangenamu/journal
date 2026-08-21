@@ -1,6 +1,6 @@
 import {Link} from 'react-router'
 type DivProps = React.ComponentProps<'div'>
-import profileImg from '../assets/profile2.png'
+import profileImg from '../assets/journal-hero.png'
 
 export default function Home({className, ...props}: DivProps) {
   return (
@@ -12,22 +12,22 @@ export default function Home({className, ...props}: DivProps) {
             <div className="col-xxl-5">
               <div className="text-center text-xxl-start">
                 <div className="badge bg-gradient-primary-to-secondary text-white mb-4">
-                  <div className="text-uppercase">생존 &middot; 탐험 &middot; 건축</div>
+                  <div className="text-uppercase">기록 &middot; 발견 &middot; 나눔</div>
                 </div>
-                <div className="fs-3 fw-light text-muted">도감북</div>
+                <div className="fs-3 fw-light text-muted">나의 하루를 모으는</div>
                 <h1 className="display-3 fw-bolder mb-5">
-                  <span className="text-gradient d-inline">팰월드</span>
+                  <span className="text-gradient d-inline">journal</span>
                 </h1>
                 <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
                   <Link
                     className="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder"
-                    to="/resume">
-                    Resume
+                    to="/journals">
+                    기록 둘러보기
                   </Link>
                   <Link
                     className="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder"
-                    to="/projects">
-                    Projects
+                    to="/community">
+                    커뮤니티
                   </Link>
                 </div>
               </div>
@@ -35,7 +35,7 @@ export default function Home({className, ...props}: DivProps) {
             <div className="col-xxl-7">
               <div className="d-flex justify-content-center mt-5 mt-xxl-0">
                 <div className="profile bg-gradient-primary-to-secondary">
-                  <img className="profile-img" src={profileImg} alt="Profile" />
+                  <img className="profile-img" src={profileImg} alt="열린 노트와 펜이 놓인 저널 책상" />
 
                   <div className="dots-1">
                     <svg
@@ -175,15 +175,15 @@ export default function Home({className, ...props}: DivProps) {
             <div className="col-xxl-8">
               <div className="text-center my-5">
                 <h2 className="display-5 fw-bolder">
-                  <span className="text-gradient d-inline">About Me</span>
+                  <span className="text-gradient d-inline">Journal, every day</span>
                 </h2>
                 <p className="lead fw-light mb-4">
-                  My name is Start Bootstrap and I help brands grow.
+                  오늘의 생각과 순간을 차분히 기록하고, 서로의 이야기를 발견해 보세요.
                 </p>
                 <p className="text-muted">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit dolorum
-                  itaque qui unde quisquam consequatur autem. Eveniet quasi nobis aliquid
-                  cumque officiis sed rem iure ipsa! Praesentium ratione atque dolorem?
+                  journal은 일상의 작은 장면부터 오래 남기고 싶은 여행의 기억까지,
+                  나만의 언어로 쌓아 가는 기록 공간입니다. 마음에 닿은 이야기는
+                  커뮤니티에서 함께 나눌 수 있어요.
                 </p>
                 <div className="d-flex justify-content-center fs-2 gap-4">
                   <a className="text-gradient" href="#!">

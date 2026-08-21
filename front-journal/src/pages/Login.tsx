@@ -76,7 +76,7 @@ export default function Login({className, ...props}: DivProps) {
             </div>
             <h1 className="fw-bolder">로그인</h1>
             <p className="lead fw-normal text-muted mb-0">
-              로그인하여 도감을 등록해주세요
+              로그인하고 소중한 기록을 이어가세요
             </p>
           </div>
           <div className="row gx-5 justify-content-center">
